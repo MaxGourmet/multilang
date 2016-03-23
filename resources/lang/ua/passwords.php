@@ -2,21 +2,10 @@
 
 return [
 
-    /*
-    |--------------------------------------------------------------------------
-    | Password Reset Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines are the default lines which match reasons
-    | that are given by the password broker for a password update attempt
-    | has failed, such as for an invalid token or invalid new password.
-    |
-    */
-
-    'password' => 'Passwords must be at least six characters and match the confirmation.',
-    'reset' => 'Your password has been reset!',
-    'sent' => 'We have e-mailed your password reset link!',
-    'token' => 'This password reset token is invalid.',
-    'user' => "We can't find a user with that e-mail address.",
+    'password' => 'Пароль повинен бути як мінімум 6 символів і співпадати!',
+    'reset' => 'Ваш пароль було скинуто!',
+    'sent' => 'Ми відправили вам e-mail з посиланням на встановлення пароля!',
+    'token' => 'Токен не правильний.',
+    'user' => "У нас немає користувача з таким e-mail.",
 
 ];

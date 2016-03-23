@@ -4,16 +4,16 @@
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
         <div class="panel panel-default">
-            <div class="panel-heading">{{ Lang::get('forms.registerFormTitle') }}</div>
+            <div class="panel-heading">{{ Lang::get('forms.profileFormTitle') }}</div>
             <div class="panel-body">
-                <form class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}">
+                <form class="form-horizontal" role="form" method="POST" action="{{ url('/saveProfile') }}">
                     {!! csrf_field() !!}
 
                     <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                         <label class="col-md-4 control-label">{{ Lang::get('forms.nameInputTitle') }}</label>
 
                         <div class="col-md-6">
-                            <input type="text" class="form-control" name="name" value="{{ old('name') }}">
+                            <input type="text" class="form-control" name="name" value="{{ Auth::user()->name }}">
 
                             @if ($errors->has('name'))
                                 <span class="help-block">
@@ -27,7 +27,7 @@
                         <label class="col-md-4 control-label">{{ Lang::get('forms.emailInputTitle') }}</label>
 
                         <div class="col-md-6">
-                            <input type="email" class="form-control" name="email" value="{{ old('email') }}">
+                            <input type="email" class="form-control" name="email" value="{{ Auth::user()->email }}">
 
                             @if ($errors->has('email'))
                                 <span class="help-block">
@@ -41,7 +41,7 @@
                         <label class="col-md-4 control-label">{{ Lang::get('forms.usernameInputTitle') }}</label>
 
                         <div class="col-md-6">
-                            <input type="text" class="form-control" name="username" value="{{ old('username') }}">
+                            <input type="text" class="form-control" name="username" value="{{ Auth::user()->username }}">
 
                             @if ($errors->has('username'))
                                 <span class="help-block">
@@ -55,10 +55,10 @@
                         <label class="col-md-4 control-label">{{ Lang::get('forms.languageInputTitle') }}</label>
 
                         <div class="col-md-6">
-                            <select class="form-control" name="language">
+                            <select class="form-control" name="language_id">
                                 @foreach(Multilang\Languages::all() as $lang)
                                     <option value="{{ $lang->id }}"
-                                    {{ $lang->id == old('language') ? 'selected="selected"' : "" }}>
+                                    {{ $lang->id == Auth::user()->language_id ? 'selected="selected"' : "" }}>
                                         {{ Lang::get('forms.language_'.$lang->code) }}
                                     </option>
                                 @endforeach
@@ -103,7 +103,7 @@
                     <div class="form-group">
                         <div class="col-md-6 col-md-offset-4">
                             <button type="submit" class="btn btn-primary">
-                                <i class="fa fa-btn fa-user"></i>{{ Lang::get('forms.registerFormTitle') }}
+                                <i class="fa fa-btn fa-user"></i>{{ Lang::get('forms.saveProfileBtn') }}
                             </button>
                         </div>
                     </div>

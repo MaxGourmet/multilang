@@ -3,6 +3,7 @@
 namespace Multilang;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Contracts\Auth\CanResetPassword;
 
 class User extends Authenticatable
 {
@@ -18,7 +19,7 @@ class User extends Authenticatable
 
     public $timestamps = false;
 
-    public function languages() {
-        return $this->belongsTo('Multilang\Languages', 'id', 'language_id');
+    public function language() {
+        return $this->belongsTo('Multilang\Languages', 'language_id');
     }
 }

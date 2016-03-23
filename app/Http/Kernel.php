@@ -29,6 +29,7 @@ class Kernel extends HttpKernel
             \Illuminate\Session\Middleware\StartSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \Multilang\Http\Middleware\VerifyCsrfToken::class,
+            \Multilang\Http\Middleware\DetectLanguage::class,
         ],
 
         'api' => [
@@ -45,6 +46,7 @@ class Kernel extends HttpKernel
      */
     protected $routeMiddleware = [
         'auth' => \Multilang\Http\Middleware\Authenticate::class,
+        'lang' => \Multilang\Http\Middleware\DetectLanguage::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guest' => \Multilang\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,

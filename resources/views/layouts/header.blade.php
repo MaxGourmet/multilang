@@ -5,17 +5,17 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li><a href="{{ url('/home') }}">Home</a></li>
+                <li><a href="{{ url('/home') }}">{{ Lang::get('common.home') }}</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-            @if (Auth::guest())
-                <li><a href="{{ url('/login') }}">Log In</a></li>
+            @if (!(isset($check) && $check) && !Auth::check())
+                <li><a href="{{ url('/login') }}">{{ Lang::get('common.login') }}</a></li>
                 <li class="divider-vertical"></li>
-                <li><a href="{{ url('/register') }}">Sign In</a></li>
+                <li><a href="{{ url('/register') }}">{{ Lang::get('common.register') }}</a></li>
             @else
-                <li><a href="{{ url('/profile') }}">{{ Auth::user()->name }}</a></li>
+                <li><a href="{{ url('/profile') }}">{{ Lang::get('common.profile') }}</a></li>
                 <li class="divider-vertical"></li>
-                <li><a href="{{ url('/logout') }}">Log Out</a></li>
+                <li><a href="{{ url('/logout') }}">{{ Lang::get('common.logout') }}</a></li>
             @endif
             </ul>
         </div>

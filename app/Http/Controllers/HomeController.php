@@ -2,21 +2,11 @@
 
 namespace Multilang\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Multilang\Http\Requests;
-use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-//        parent::__construct();
-    }
 
     /**
      * Show the application dashboard.
@@ -25,7 +15,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        //test
         return view('home');
     }
 
@@ -34,8 +23,8 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-//    public function welcome()
-//    {
-//        return view('welcome');
-//    }
+    public function welcome()
+    {
+        return view('welcome', ['check' => Auth::check()]);
+    }
 }
