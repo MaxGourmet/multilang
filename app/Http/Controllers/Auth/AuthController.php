@@ -7,6 +7,7 @@ use Validator;
 use Multilang\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Auth;
 
 class AuthController extends Controller
 {
@@ -29,6 +30,7 @@ class AuthController extends Controller
      * @var string
      */
     protected $redirectTo = '/home';
+    protected $username = 'username';
 
     /**
      * Create a new authentication controller instance.
@@ -65,7 +67,6 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-
         return User::create([
             'name' => $data['name'],
             'username' => $data['username'],
@@ -74,4 +75,49 @@ class AuthController extends Controller
             'password' => bcrypt($data['password']),
         ]);
     }
+
+    protected function handleUserWasAuthenticated($request, $throttles)
+    {
+        if (isset($_COOKIE['usersLanguage'])) {
+            setcookie('usersLanguage', null);
+        }
+        if ($throttles) {
+            $this->clearLoginAttempts($request);
+        }
+
+        if (method_exists($this, 'authenticated')) {
+            return $this->authenticated($request, Auth::guard($this->getGuard())->user());
+        }
+
+        return redirect()->intended($this->redirectPath());
+    }
+
+    public function logout()
+    {
+        Auth::guard($this->getGuard())->logout();
+        if (isset($_COOKIE['usersLanguage'])) {
+            setcookie('usersLanguage', null);
+        }
+
+        return redirect(property_exists($this, 'redirectAfterLogout') ? $this->redirectAfterLogout : '/');
+    }
+
+    public function register(\Illuminate\Http\Request $request)
+    {
+        $validator = $this->validator($request->all());
+
+        if ($validator->fails()) {
+            $this->throwValidationException(
+                $request, $validator
+            );
+        }
+
+        Auth::guard($this->getGuard())->login($this->create($request->all()));
+        if (isset($_COOKIE['usersLanguage'])) {
+            setcookie('usersLanguage', null);
+        }
+
+        return redirect($this->redirectPath());
+    }
+
 }
